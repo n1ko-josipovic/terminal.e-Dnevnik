@@ -1,1 +1,1 @@
-# e-dnevnik-terminal-interface
+# TermED
