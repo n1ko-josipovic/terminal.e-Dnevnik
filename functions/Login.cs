@@ -47,7 +47,6 @@ class LoginProcedure
 
                     HttpResponseMessage postResponse = await client.PostAsync(loginUrl, formData);
 
-                    #pragma warning disable CS8602
                     if (postResponse.RequestMessage.RequestUri.AbsoluteUri != loginUrl)
                     {
                         AnsiConsole.MarkupLine("\n [bold #17B169]Uspješna prijava.[/]");
@@ -60,12 +59,13 @@ class LoginProcedure
                         var nameNode = html.DocumentNode.SelectSingleNode("//div[@class='user-name']/span");
                         string? name = nameNode.InnerText.Trim();
 
-                        var personalData = new
+                        List<PersonalData> personalData = [];
+                        personalData.Add(new PersonalData
                         {
                             Name = name,
                             Role = "Uèenik",
                             Username = username
-                        };
+                        });
 
                         string json = JsonConvert.SerializeObject(personalData, Formatting.Indented);
 
@@ -74,10 +74,8 @@ class LoginProcedure
 
                         return true;
                     }
-                    #pragma warning restore CS8602
                 }
             }
-
         }
 
         AnsiConsole.MarkupLine("\n [bold red]Neuspješna prijava.[/]\n");
@@ -87,4 +85,11 @@ class LoginProcedure
 
         return false;
     }
+}
+
+public class PersonalData
+{
+    public string Name { get; set; } = string.Empty;
+    public string Role { get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
 }

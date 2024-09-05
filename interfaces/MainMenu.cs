@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using Spectre.Console;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using CommandCode;
@@ -78,7 +79,7 @@ class MenuProcedure
     {
 
         var jsonData = await File.ReadAllTextAsync("classData.json");
-        var classes = JsonSerializer.Deserialize<List<ClassData>>(jsonData);
+        var classes = System.Text.Json.JsonSerializer.Deserialize<List<ClassData>>(jsonData);
 
         var matchingClass = classes?.FirstOrDefault(c => c.CourseID == courseID);
 
@@ -92,9 +93,10 @@ class MenuProcedure
     {
         var jsonData = await File.ReadAllTextAsync("personalData.json");
 
-        JObject personalData;
-        personalData = JObject.Parse(jsonData);
+        JArray personalDataArray;
+        personalDataArray = JArray.Parse(jsonData);
 
+        var personalData = personalDataArray[0];
         var personalName = personalData["Name"]?.ToString() ?? "Unknown";
         var role = personalData["Role"]?.ToString() ?? "Unknown";
         var personalUsername = personalData["Username"]?.ToString() ?? "Unknown";
