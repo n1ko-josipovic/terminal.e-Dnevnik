@@ -1,1 +1,1 @@
-# TermED
+# Terminal e-Dnevnik
